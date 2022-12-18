@@ -93,32 +93,30 @@ def roll_the_dice_re(code):
     tmp = search("([^\+\-\dD])", code)
     if tmp:
         return "Not allowed char: " + tmp.group(0)
-    tmp = findall("D", code)
-    if len(tmp) == 0:
+    x, y, z = split_dice_code(code)
+    if not y:
         return "No dice specified!"
-    elif len(tmp) > 1:
-        return "Only one 'D' is allowed!"
+    elif "D" + y not in POSSIBLE_DICES:
+        return f"Not allowed dice: D{y}!"
     else:
-        x = search(r"(\d*)D", code).group(1)
-        x = 1 if not x else int(x)
-        y = int(search(r"D(\d+)", code).group(1))
-        if f"D{y}" not in POSSIBLE_DICES:
-            return f"Not allowed dice: D{y}"
-    if search("[\+\-]\d*D", code):
+        y = int(y)
+    if "D" in x:
+        return "Only one 'D' is allowed!"
+    elif "+" in x or "-" in x:
         return "Wrong dice code!"
-    tmp = findall("[\+\-]", code)
-    if len(tmp) > 1:
-        return "Only one modifier is allowed!"
-    elif len(tmp) == 0:
+    elif not x:
+        x = 1
+    else:
+        x = int(x)
+    if not z:
         z = 0
     else:
-        z = search(r"[\+\-](\d+)", code)
-        if not z:
-            return f"No value after '{code[-1]}'!"
-        if z.group(0)[0] == '+':
-            z = int(z.group(1))
+        if len(findall("[\+\-]", z)) > 1:
+            return "Only one modifier is allowed!"
+        elif z in ("+", "-"):
+            return f"No value after '{z}'!"
         else:
-            z = 0 - int(z.group(1))
+            z = int(z)
     return sum([randint(1, y) for _ in range(x)]) + z
 
 
