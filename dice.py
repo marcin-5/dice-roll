@@ -33,7 +33,7 @@ def roll_the_dice(code):
         return "Only one 'D' is allowed!"
     if (code.count("+") + code.count("-")) > 1:
         return "Only one modifier is allowed!"
-    elif code[-1] in ("+" , "-"):
+    elif code[-1] in ("+", "-"):
         return f"No value after '{code[-1]}'!"
     for i in POSSIBLE_DICES:
         if i in code:
