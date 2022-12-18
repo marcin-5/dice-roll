@@ -4,6 +4,17 @@ from re import findall, search
 POSSIBLE_DICES = tuple(f"D{_}" for _ in (3, 4, 6, 8, 10, 12, 20, 100))
 
 
+def add_return_var(func):
+    """When function returns error message add param from function call to the message."""
+    def wrapper(var):
+        res = func(var)
+        if type(res) is str:
+            res += f" [{str(var)}]"
+        return res
+    return wrapper
+
+
+@add_return_var
 def roll_the_dice(code):
     """
     Calculate dice roll from dice pattern.
@@ -59,6 +70,7 @@ def roll_the_dice(code):
     return sum([randint(1, y) for _ in range(x)]) + z
 
 
+@add_return_var
 def roll_the_dice_re(code):
     """
     Calculate dice roll from dice pattern.
@@ -108,4 +120,3 @@ if __name__ == "__main__":
     for c in test_codes:
         print(roll_the_dice(c), end=" | ")
         print(roll_the_dice_re(c))
-
