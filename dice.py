@@ -1,5 +1,5 @@
 from random import randint
-from re import findall, search
+from re import findall, match, search
 
 POSSIBLE_DICES = tuple(f"D{_}" for _ in (3, 4, 6, 8, 10, 12, 20, 100))
 
@@ -68,6 +68,16 @@ def roll_the_dice(code):
         y = int(code)
         z = 0
     return sum([randint(1, y) for _ in range(x)]) + z
+
+
+def split_dice_code(code):
+    """Return x, y, z from dice code xDy+z"""
+    if not code:
+        return '', '', ''   # empty code
+    try:
+        return match("(.*)D([^\+\-]*)([\+\-]?.*)", code).group(1, 2, 3)
+    except AttributeError:
+        return '', '', ''   # no D in code
 
 
 @add_return_var
