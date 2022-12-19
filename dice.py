@@ -108,8 +108,9 @@ def roll_the_dice_re(code):
 if __name__ == "__main__":
     test_codes = (("2D10+10", "D6", "2D3", "D12-1", "5D8-4",
                    "2D10-1", "2D10+10", "D6", "2D3", "D12-1",
-                   "32D3-", "DD34", "4-3D6", "+D10", "", "2+2",
-                   "2D6+1+2", "2D10-10+1", "7D7+7", "2d8", "D8*2"))
+                   "32D3-", "DD34", "DD100", "4-3D6", "+D10",
+                   "", "2+2", "2D6+1+2", "2D10-10+1", "2d8", "D8*2",
+                   "7D7+7", "D1", "2D2"))
     for c in test_codes:
         print(roll_the_dice(c), end=" | ")
         print(roll_the_dice_re(c))
