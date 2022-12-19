@@ -39,32 +39,17 @@ def roll_the_dice(code):
         if i in code:
             break
     else:
-        y = code.split("D")[1]
-        if "+" in y:
-            y = y.split("+")[0]
-        elif "-" in y:
-            y = y.split("-")[0]
-        return f"Not allowed dice: D{y}"
-    if code[0] == "D":
-        x = 1
-    else:
-        x = ""
-        while not code[0] == "D":
-            if code[0] in ("+", "-"):
-                return "Wrong dice code!"
-            x += code[0]
-            code = code[1:]
-        x = int(x)
-    code = code[1:]
-    if "+" in code:
-        y, z = code.split("+")
+        return f"Not allowed dice: D{code.split('D')[1].replace('-', '+').split('+')[0]}"
+    x, code = code.split("D")
+    if any(_ in x for _ in ("+", "-")):
+        return "Wrong dice code!"
+    x = int(x) if x else 1
+    code = code.replace("+", "|+").replace("-", "|-")
+    try:
+        y, z = code.split("|")
         y = int(y)
         z = int(z)
-    elif "-" in code:
-        y, z = code.split("-")
-        y = int(y)
-        z = 0 - int(z)
-    else:
+    except ValueError:
         y = int(code)
         z = 0
     return sum([randint(1, y) for _ in range(x)]) + z
