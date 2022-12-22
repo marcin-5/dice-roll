@@ -34,7 +34,7 @@ def roll_the_dice(code):
     if (code.count("+") + code.count("-")) > 1:
         return "Only one modifier is allowed!"
     elif code[-1] in ("+", "-"):
-        return f"No value after '{code[-1]}'!"
+        code += "0"
     for i in POSSIBLE_DICES:
         if i in code:
             break
@@ -93,13 +93,11 @@ def roll_the_dice_re(code):
         x = 1
     else:
         x = int(x)
-    if not z:
+    if not z or z in ("+", "-"):
         z = 0
     else:
         if len(findall("[\+\-]", z)) > 1:
             return "Only one modifier is allowed!"
-        elif z in ("+", "-"):
-            return f"No value after '{z}'!"
         else:
             z = int(z)
     return sum([randint(1, y) for _ in range(x)]) + z
