@@ -57,12 +57,9 @@ def roll_the_dice(code):
 
 def split_dice_code(code):
     """Return x, y, z from dice code xDy+z"""
-    if not code:
-        return '', '', ''   # empty code
-    try:
-        return match("(.*)D([^\+\-]*)([\+\-]?.*)", code).group(1, 2, 3)
-    except AttributeError:
-        return '', '', ''   # no D in code
+    if not code or "D" not in code:
+        return '', '', ''   # empty code or not D in code
+    return match("(.*)D([^\+\-]*)([\+\-]?.*)", code).group(1, 2, 3)
 
 
 @add_return_var
