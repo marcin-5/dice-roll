@@ -9,7 +9,7 @@ def add_return_var(func):
     def wrapper(var):
         res = func(var)
         if type(res) is str:
-            res += f" [{str(var)}]"
+            res += f" [{var}]"
         return res
     return wrapper
 
