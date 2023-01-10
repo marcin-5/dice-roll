@@ -72,9 +72,8 @@ def roll_the_dice_re(code):
     :rtype: int, str
     :return: dice roll value for proper dice pattern, error message elsewhere
     """
-    tmp = re.search("([^\+\-\dD])", code)
-    if tmp:
-        return "Not allowed char: " + tmp.group(0)
+    if m := re.search("([^\+\-\dD])", code):
+        return "Not allowed char: " + m.group(0)
     match split_dice_code(code):
         case (x, y, z) if not y:
             return "No dice specified!"
