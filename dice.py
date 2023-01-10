@@ -4,7 +4,7 @@ import re
 POSSIBLE_DICES = tuple(f"D{_}" for _ in (3, 4, 6, 8, 10, 12, 20, 100))
 
 
-def add_return_var(func):
+def add_arg_to_err_msg(func):
     """When function returns error message add param from function call to the message."""
     def wrapper(var):
         res = func(var)
@@ -14,7 +14,7 @@ def add_return_var(func):
     return wrapper
 
 
-@add_return_var
+@add_arg_to_err_msg
 def roll_the_dice(code):
     """
     Calculate dice roll from dice pattern.
@@ -62,7 +62,7 @@ def split_dice_code(code):
     return re.match("(.*)D([^\+\-]*)([\+\-]?.*)", code).group(1, 2, 3)
 
 
-@add_return_var
+@add_arg_to_err_msg
 def roll_the_dice_re(code):
     """
     Calculate dice roll from dice pattern.
