@@ -75,29 +75,24 @@ def roll_the_dice_re(code):
     tmp = re.search("([^\+\-\dD])", code)
     if tmp:
         return "Not allowed char: " + tmp.group(0)
-    x, y, z = split_dice_code(code)
-    if not y:
-        return "No dice specified!"
-    elif "D" + y not in POSSIBLE_DICES:
-        return f"Not allowed dice: D{y}!"
-    else:
-        y = int(y)
-    if "D" in x:
-        return "Only one 'D' is allowed!"
-    elif "+" in x or "-" in x:
-        return "Wrong dice code!"
-    elif not x:
-        x = 1
-    else:
-        x = int(x)
-    if not z or z in ("+", "-"):
-        z = 0
-    else:
-        if len(re.findall("[\+\-]", z)) > 1:
+    match split_dice_code(code):
+        case (x, y, z) if not y:
+            return "No dice specified!"
+        case (x, y, z) if "D" + y not in POSSIBLE_DICES:
+            return f"Not allowed dice: D{y}!"
+        case (x, y, z) if "D" in x:
+            return "Only one 'D' is allowed!"
+        case (x, y, z) if "+" in x or "-" in x:
+            return "Wrong dice code!"
+        case (x, y, z) if len(re.findall("[\+\-]", z)) > 1:
             return "Only one modifier is allowed!"
-        else:
-            z = int(z)
-    return sum([randint(1, y) for _ in range(x)]) + z
+        case (x, y, z):
+            y = int(y)
+            x = int(x) if x else 1
+            z = 0 if not z or z in ("+", "-") else int(z)
+            return sum([randint(1, y) for _ in range(x)]) + z
+        case _:
+            return "FIXME"
 
 
 if __name__ == "__main__":
