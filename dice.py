@@ -1,5 +1,5 @@
 from random import randint
-from re import findall, match, search
+import re
 
 POSSIBLE_DICES = tuple(f"D{_}" for _ in (3, 4, 6, 8, 10, 12, 20, 100))
 
@@ -59,7 +59,7 @@ def split_dice_code(code):
     """Return x, y, z from dice code xDy+z"""
     if not code or "D" not in code:
         return '', '', ''   # empty code or not D in code
-    return match("(.*)D([^\+\-]*)([\+\-]?.*)", code).group(1, 2, 3)
+    return re.match("(.*)D([^\+\-]*)([\+\-]?.*)", code).group(1, 2, 3)
 
 
 @add_return_var
@@ -72,7 +72,7 @@ def roll_the_dice_re(code):
     :rtype: int, str
     :return: dice roll value for proper dice pattern, error message elsewhere
     """
-    tmp = search("([^\+\-\dD])", code)
+    tmp = re.search("([^\+\-\dD])", code)
     if tmp:
         return "Not allowed char: " + tmp.group(0)
     x, y, z = split_dice_code(code)
@@ -93,7 +93,7 @@ def roll_the_dice_re(code):
     if not z or z in ("+", "-"):
         z = 0
     else:
-        if len(findall("[\+\-]", z)) > 1:
+        if len(re.findall("[\+\-]", z)) > 1:
             return "Only one modifier is allowed!"
         else:
             z = int(z)
