@@ -142,6 +142,8 @@ if __name__ == "__main__":
                     break
             else:
                 print(f"{v} not in ({rmin}, {rmax}) for {c} code.")
+                import sys
+                sys.exit()
         else:
             print(f"All results for code {c} >= {rmin} and <= {rmax}")
 
