@@ -149,7 +149,6 @@ if __name__ == "__main__":
 
     for c, v in test_min_max.items():
         r = roll_the_dice_re(c)
-        while not r == v:
+        while not (r := roll_the_dice_re(c)) == v:
             print(c, v, r, " " * 10, end="\r")
-            r = roll_the_dice_re(c)
         print(c, v, r, " " * 10)
