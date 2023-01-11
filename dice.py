@@ -132,13 +132,6 @@ if __name__ == "__main__":
         "8D4-7": 1
     }
     for c, v in test_min_max.items():
-        r = roll_the_dice_re(c)
-        while not r == v:
-            print(c, v, r, " " * 10, end="\r")
-            r = roll_the_dice_re(c)
-        print(c, v, r, " " * 10)
-
-    for c, v in test_min_max.items():
         rmin = get_min_value(c)
         rmax = get_max_value(c)
         for i in range(1000):
@@ -151,3 +144,10 @@ if __name__ == "__main__":
                 print(f"{v} not in ({rmin}, {rmax}) for {c} code.")
         else:
             print(f"All results for code {c} >= {rmin} and <= {rmax}")
+
+    for c, v in test_min_max.items():
+        r = roll_the_dice_re(c)
+        while not r == v:
+            print(c, v, r, " " * 10, end="\r")
+            r = roll_the_dice_re(c)
+        print(c, v, r, " " * 10)
