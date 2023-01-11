@@ -94,6 +94,23 @@ def roll_the_dice_re(code):
             return "FIXME"
 
 
+def get_min_value(code):
+    """Returns min value for dice code"""
+    x, _, z = split_dice_code(code)
+    x = int(x) if x else 1
+    z = int(z) if z else 0
+    return x * 1 + z
+
+
+def get_max_value(code):
+    """Returns max value for dice code"""
+    x, y, z = split_dice_code(code)
+    x = int(x) if x else 1
+    y = int(y)
+    z = int(z) if z else 0
+    return x * y + z
+
+
 if __name__ == "__main__":
     test_codes = (("2D10+10", "D6", "2D3", "D12-1", "5D8-4",
                    "2D10-1", "2D10+10", "D6", "2D3", "D12-1",
@@ -120,3 +137,17 @@ if __name__ == "__main__":
             print(c, v, r, " " * 10, end="\r")
             r = roll_the_dice_re(c)
         print(c, v, r, " " * 10)
+
+    for c, v in test_min_max.items():
+        rmin = get_min_value(c)
+        rmax = get_max_value(c)
+        for i in range(1000):
+            r = roll_the_dice_re(c)
+            if v == rmin or v == rmax:
+                if r < rmin or r > rmax:
+                    print("!", c, v, r)
+                    break
+            else:
+                print(f"v not in ({rmin}, {rmax}) for {c} code.")
+        else:
+            print(f"All results for code {c} >= {rmin} and <= {rmax}")
