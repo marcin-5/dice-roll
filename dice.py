@@ -148,6 +148,6 @@ if __name__ == "__main__":
                     print("!", c, v, r)
                     break
             else:
-                print(f"v not in ({rmin}, {rmax}) for {c} code.")
+                print(f"{v} not in ({rmin}, {rmax}) for {c} code.")
         else:
             print(f"All results for code {c} >= {rmin} and <= {rmax}")
