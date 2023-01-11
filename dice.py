@@ -103,3 +103,20 @@ if __name__ == "__main__":
     for c in test_codes:
         print(roll_the_dice(c), end=" | ")
         print(roll_the_dice_re(c))
+
+    test_min_max = {
+        "D3-1": 0,
+        "D4+1": 5,
+        "3D6-3": 15,
+        "6D8+7": 55,
+        "5D10-4": 1,
+        "2D12+1": 25,
+        "11D3": 33,
+        "8D4-7": 1
+    }
+    for c, v in test_min_max.items():
+        r = roll_the_dice_re(c)
+        while not r == v:
+            print(c, v, r, " " * 10, end="\r")
+            r = roll_the_dice_re(c)
+        print(c, v, r, " " * 10)
