@@ -23,10 +23,8 @@ def roll_the_dice(code):
     :rtype: int, str
     :return: dice roll value for proper dice pattern, error message elsewhere
     """
-    exp_chars = tuple([str(_) for _ in range(0, 10)] + ["D", "+", "-"])
-    for i in code:
-        if i not in exp_chars:
-            return f"Not allowed char: {i}"
+    if ch := list(filter(lambda _: _ not in "0123456789D+-", code)):
+        return f"Not allowed char%s: {', '.join(ch)}" % ("s" if len(ch) > 1 else "")
     if "D" not in code:
         return "No dice specified!"
     elif code.count("D") > 1:
